@@ -9,12 +9,12 @@ from pathlib import Path
 from threading import Thread, Event
 
 md_iid = "3.0"
-md_version = "2.1"
+md_version = "2.2"
 md_name = "CoinGecko"
 md_description = "Access CoinGecko"
 md_license = "MIT"
 md_url = "https://github.com/albertlauncher/albert-plugin-python-coingecko"
-md_authors = "@manuelschneid3r"
+md_authors = ["@ManuelSchneid3r"]
 
 
 class CoinFetcherThread(Thread):
