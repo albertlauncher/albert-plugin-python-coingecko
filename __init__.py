@@ -8,7 +8,7 @@ from json import load, loads, dumps
 from pathlib import Path
 from threading import Thread, Event
 
-md_iid = "3.0"
+md_iid = "4.0"
 md_version = "2.2"
 md_name = "CoinGecko"
 md_description = "Access CoinGecko"
@@ -68,7 +68,7 @@ class NameItem(StandardItem):
             text=f"{name} {price} {symbol}/$",
             subtext=f"#{rank}, 24h: {change24h}%, Cap: {cap:n} $, Vol: {vol:n} $",
             inputActionText=str(price),
-            iconUrls=Plugin.iconUrls,
+            iconFactory=lambda: makeImageIcon(Path(__file__).parent / "coingecko.png"),
             actions=[
                 Action("show", f"Show {name} on CoinGecko",
                        lambda coin_id=identifier: openUrl(Plugin.coinsUrl + coin_id)),
@@ -83,7 +83,6 @@ class NameItem(StandardItem):
 class Plugin(PluginInstance, IndexQueryHandler):
 
     coinsUrl = "https://www.coingecko.com/en/coins/"
-    iconUrls = [f"file:{Path(__file__).parent}/coingecko.png"]
 
     def __init__(self):
         PluginInstance.__init__(self)
