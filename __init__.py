@@ -9,7 +9,7 @@ from pathlib import Path
 from threading import Thread, Event
 
 md_iid = "4.0"
-md_version = "2.2"
+md_version = "2.2.1"
 md_name = "CoinGecko"
 md_description = "Access CoinGecko"
 md_license = "MIT"
