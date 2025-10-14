@@ -67,8 +67,8 @@ class NameItem(StandardItem):
             id=identifier,
             text=f"{name} {price} {symbol}/$",
             subtext=f"#{rank}, 24h: {change24h}%, Cap: {cap:n} $, Vol: {vol:n} $",
-            inputActionText=str(price),
-            iconFactory=lambda: makeImageIcon(Path(__file__).parent / "coingecko.png"),
+            input_action_text=str(price),
+            icon_factory=lambda: makeImageIcon(Path(__file__).parent / "coingecko.png"),
             actions=[
                 Action("show", f"Show {name} on CoinGecko",
                        lambda coin_id=identifier: openUrl(Plugin.coinsUrl + coin_id)),
