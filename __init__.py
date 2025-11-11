@@ -8,7 +8,7 @@ from json import load, loads, dumps
 from pathlib import Path
 from threading import Thread, Event
 
-md_iid = "4.0"
+md_iid = "5.0"
 md_version = "2.2.1"
 md_name = "CoinGecko"
 md_description = "Access CoinGecko"
@@ -88,7 +88,7 @@ class Plugin(PluginInstance, IndexQueryHandler):
         PluginInstance.__init__(self)
         IndexQueryHandler.__init__(self)
 
-        self.items = []
+        self.market_items = []
         self.mtime = 0
         cache_location = self.cacheLocation()
         cache_location.mkdir(parents=True, exist_ok=True)
@@ -110,9 +110,9 @@ class Plugin(PluginInstance, IndexQueryHandler):
         if self.coinCacheFilePath.is_file() and (mtime := self.coinCacheFilePath.lstat().st_mtime) > self.mtime:
             self.mtime = mtime
             with open(self.coinCacheFilePath) as f:
-                self.items.clear()
+                self.market_items.clear()
                 for json_object in load(f):
-                    self.items.append(NameItem(
+                    self.market_items.append(NameItem(
                         identifier=json_object['id'],
                         name=json_object['name'],
                         symbol=json_object['symbol'].upper(),
@@ -124,12 +124,12 @@ class Plugin(PluginInstance, IndexQueryHandler):
                     ))
 
             index_items = []
-            for item in self.items:
+            for item in self.market_items:
                 index_items.append(IndexItem(item=item, string=item.name))
                 index_items.append(IndexItem(item=item, string=item.symbol))
             self.setIndexItems(index_items)
 
     # override default trigger handling to sort by rank
-    def handleTriggerQuery(self, query):
-        m = Matcher(query.string)
-        query.add([item for item in self.items if m.match(item.symbol, item.name)])
+    def items(self, ctx):
+        m = Matcher(ctx.query)
+        yield [item for item in self.market_items if m.match(item.symbol, item.name)]
