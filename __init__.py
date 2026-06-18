@@ -8,7 +8,7 @@ from json import load, loads, dumps
 from pathlib import Path
 from threading import Thread, Event
 
-md_iid = "5.0"
+md_iid = "6.0"
 md_version = "2.2.2"
 md_name = "CoinGecko"
 md_description = "Access CoinGecko"
